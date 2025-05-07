@@ -1,5 +1,4 @@
-import { Express } from 'express';
-import { SYSTEM_CONFIG } from '../../config/system';
+import { Router } from 'express';
 import { authMiddleware } from '../../middlewares/authMiddleware';
 import productRoutes from './ProductRoutes';
 import productCategoryRoutes from './ProductCategoryRoutes';
@@ -7,21 +6,23 @@ import roleRoutes from './RoleRoutes';
 import accountRoutes from './AccountRoutes';
 import authRoutes from './AuthRoutes';
 
-export default (app: Express) => {
-  const PATH_ADMIN = `${SYSTEM_CONFIG.API_VERSION}${SYSTEM_CONFIG.PREFIX_ADMIN}`;
+const router = Router();
 
-  // Route cho sản phẩm
-  app.use(`${PATH_ADMIN}/products`, authMiddleware, productRoutes);
+console.log('Attaching admin routes');
 
-  // Route cho danh mục sản phẩm
-  app.use(`${PATH_ADMIN}/product-categories`, authMiddleware, productCategoryRoutes);
+// Route cho sản phẩm
+router.use('/products', authMiddleware, productRoutes);
 
-  // Route cho vai trò
-  app.use(`${PATH_ADMIN}/roles`, authMiddleware, roleRoutes);
+// Route cho danh mục sản phẩm
+router.use('/product-categories', authMiddleware, productCategoryRoutes);
 
-  // Route cho tài khoản
-  app.use(`${PATH_ADMIN}/accounts`, authMiddleware, accountRoutes);
+// Route cho vai trò
+router.use('/roles', authMiddleware, roleRoutes);
 
-  // Route cho xác thực admin
-  app.use(`${PATH_ADMIN}/auth`, authRoutes);
-};
+// Route cho tài khoản
+router.use('/accounts', authMiddleware, accountRoutes);
+
+// Route cho xác thực admin
+router.use('/auth', authRoutes);
+
+export default router;

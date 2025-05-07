@@ -13,7 +13,7 @@ interface PaginationResult {
   totalPage: number;
   totalItems: number;
   error?: { status: number; message: string };
-}
+}     
 
 /**
  * Hàm pagination tính toán các thông số phân trang cho danh sách dữ liệu.

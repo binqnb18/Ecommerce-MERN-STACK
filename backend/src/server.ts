@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { connectDB } from './config/database';
 import { errorHandler } from './middlewares/errorHandler';
-import { SYSTEM_CONFIG } from './config/system';
 import adminRoutes from './routes/admin';
 import clientRoutes from './routes/client';
 
@@ -23,8 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 
 connectDB();
 
-adminRoutes(app);
-clientRoutes(app);
+// Gắn routes
+app.use('/api/admin/v1', adminRoutes);
+app.use('/api/client/v1', clientRoutes);
 
 app.use(errorHandler);
 
